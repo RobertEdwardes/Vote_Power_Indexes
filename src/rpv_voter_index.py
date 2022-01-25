@@ -21,7 +21,7 @@ import collections
 import logging
 
 
-def block_classification(df, OtherPopCol, TargetPopCol, Party1, Party2):
+def block_classification(df, OtherPopCol, TargetPopCol, OtherParty, ColilitionParty):
     df['Target_Percentage'] = df[TargetPopCol]/(df[OtherPopCol]+df[TargetPopCol])
     df['Group'] = None
     df = df.reset_index(drop=True)
@@ -37,9 +37,9 @@ def block_classification(df, OtherPopCol, TargetPopCol, Party1, Party2):
             df['Group'].iloc[i] = 'O60%'
         if row['Target_Percentage'] <= .1:
             df['Group'].iloc[i] = 'O90%'
-    quoat = df[[Party1,Party2]].sum()
-    quoat = (quoat[Party2] + quoat[Party1])/2
-    voteGroups = df[['Group',Party2]].groupby('Group').sum().reset_index()
+    quoat = df[[OtherParty,ColilitionParty]].sum()
+    quoat = (quoat[ColilitionParty] + quoat[OtherParty])/2
+    voteGroups = df[['Group',ColilitionParty]].groupby('Group').sum().reset_index()
     voteGroups = voteGroups.values.tolist()
     return voteGroups, quoat
 
@@ -90,10 +90,10 @@ def ssi(group, quoat, filename):
     else:
         df_share.to_csv(f'{filename}-Shapley–Shubik.csv',index=False)
 
-def power_index(df, OtherPopCol, TargetPopCol, Party1, Party2, vIndex=None, filename=None):
+def power_index(df, OtherPopCol, TargetPopCol, OtherParty, ColilitionParty, vIndex=None, filename=None):
     if len(df.index) < 2:
         raise Exception('Dataframe needs 2 or more rows to compare')
-    group, quoat = block_classification(df, TotalPopCol, TargetPopCol, Party1, Party2)
+    group, quoat = block_classification(df, TotalPopCol, TargetPopCol, OtherParty, ColilitionParty)
     if vIndex is None or vIndex == 'bpi':
         bpi(group, quoat, filename)
     if vIndex is None or vIndex == 'ssi':
