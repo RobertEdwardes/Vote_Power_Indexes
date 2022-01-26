@@ -14,9 +14,9 @@ OtherPopCol - Majority community
 
 TargetPopCol - Minority community
 
-Party1 - None colitlition party of choice
+OtherParty - None colitlition party of choice
 
-Party2 - Colitlition party of choice
+ColilitionParty - Colitlition party of choice
 
 vIndex (ssi/bpi/none): 
 - **None** both indexes 

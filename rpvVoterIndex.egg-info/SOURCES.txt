@@ -1,0 +1,8 @@
+LICENSE.txt
+README.md
+pyproject.toml
+setup.cfg
+rpvVoterIndex.egg-info/PKG-INFO
+rpvVoterIndex.egg-info/SOURCES.txt
+rpvVoterIndex.egg-info/dependency_links.txt
+rpvVoterIndex.egg-info/top_level.txt
