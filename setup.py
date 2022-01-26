@@ -9,7 +9,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 setup(
     
     name='rpvVoterIndex',  
-    version='0.1.0',  
+    version='0.1.1',  
     description='Tool to analyse poltical geogrpahies for maliprortation', 
     long_description=long_description, 
     long_description_content_type='text/markdown', 
