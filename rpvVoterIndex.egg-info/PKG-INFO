@@ -6,11 +6,17 @@ Home-page: https://github.com/RobertEdwardes/Vote_Power_Indexes
 Author: Robert Edwardes
 Author-email: robie@fairlines.org
 License: UNKNOWN
-Project-URL: Bug Tracker, https://github.com/RobertEdwardes/Vote_Power_Indexes
 Platform: UNKNOWN
-Classifier: Programming Language :: Python :: 3
+Classifier: Development Status :: 4 - Beta
 Classifier: License :: OSI Approved :: MIT License
-Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3 :: Only
+Requires-Python: >=3.6, <4
 Description-Content-Type: text/markdown
 License-File: LICENSE.txt
 
