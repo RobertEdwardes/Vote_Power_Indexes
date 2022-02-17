@@ -25,7 +25,6 @@ def block_classification(df, OtherPopCol, TargetPopCol, OtherParty, ColilitionPa
     df['Target_Percentage'] = df[TargetPopCol]/(df[OtherPopCol]+df[TargetPopCol])
     df['Group'] = None
     df = df.reset_index(drop=True)
-
     for i ,row in df.iterrows():
         if row['Target_Percentage'] >= .9:
             df['Group'].iloc[i] = 'T90%'
@@ -39,12 +38,12 @@ def block_classification(df, OtherPopCol, TargetPopCol, OtherParty, ColilitionPa
             df['Group'].iloc[i] = 'O90%'
     quoat = df[[OtherParty,ColilitionParty]].sum()
     quoat = (quoat[ColilitionParty] + quoat[OtherParty])/2
-    voteGroups = df[['Group',ColilitionParty]].groupby('Group').sum().reset_index()
+    voteGroups = df[['Group',ColilitionParty]].groupby('Group', as_index=False).sum()
     voteGroups = voteGroups.values.tolist()
     return voteGroups, quoat
 
 
-def bpi(group, quoat, filename):
+def bpi(group, quoat, filename=None):
     idx = 0
     output = {}
     for i in range(1,len(group)+1):
@@ -68,12 +67,13 @@ def bpi(group, quoat, filename):
     T_IdxSum = df_share['T_Index'].sum()
     df_share['T_PowerShare'] = (df_share['T_Index']/T_IdxSum) * 100
     df_share['T_Critical_Vote'] = (df_share['T_Index']/(2**(5-1)))*100
-    if filename is None:
-        df_share.to_csv(f'Banzhaf-Power.csv',index=False)
-    else:
-        df_share.to_csv(f'{filename}-Banzhaf-Power.csv',index=False)
+    if sum(crit_count.values()) != 0:
+        if filename is None:
+            df_share.to_csv(f'Banzhaf-Power.csv',index=False)
+        else:
+            df_share.to_csv(f'{filename}-Banzhaf-Power.csv',index=False)
 
-def ssi(group, quoat, filename):
+def ssi(group, quoat, filename=None):
     output = {'T90%':0,'T60%':0,'O90%':0,'O60%':0,'N50%':0}
     for i in itertools.permutations(group):
         c = 0
@@ -85,10 +85,11 @@ def ssi(group, quoat, filename):
     df_share = pd.DataFrame(list(output.items()),columns = ['Cat','T_Count'])
     factorial = math.factorial(len(output.keys()))
     df_share['T_Index'] = df_share['T_Count']/factorial
-    if filename is None:
-        df_share.to_csv(f'Shapley–Shubik.csv',index=False)
-    else:
-        df_share.to_csv(f'{filename}-Shapley–Shubik.csv',index=False)
+    if sum(output.values()) != 0:
+        if filename is None:
+            df_share.to_csv(f'Shapley–Shubik.csv',index=False)
+        else:
+            df_share.to_csv(f'{filename}-Shapley–Shubik.csv',index=False)
 
 def power_index(df, OtherPopCol, TargetPopCol, OtherParty, ColilitionParty, vIndex=None, filename=None):
     if len(df.index) < 2:
