@@ -72,6 +72,10 @@ def bpi(group, quoat, filename=None):
             df_share.to_csv(f'Banzhaf-Power.csv',index=False)
         else:
             df_share.to_csv(f'{filename}-Banzhaf-Power.csv',index=False)
+    else filename is not None:
+        file1 = open("No_Cparty_Winning_Colition.txt","a")
+        file1.writelines(f'{filename} \n')
+        file1.close()
 
 def ssi(group, quoat, filename=None):
     output = {'T90%':0,'T60%':0,'O90%':0,'O60%':0,'N50%':0}
@@ -90,6 +94,10 @@ def ssi(group, quoat, filename=None):
             df_share.to_csv(f'Shapley–Shubik.csv',index=False)
         else:
             df_share.to_csv(f'{filename}-Shapley–Shubik.csv',index=False)
+    else:
+        file1 = open("No_Cparty_Winning_Colition.txt","a")
+        file1.writelines(f'{filename} \n')
+        file1.close()
 
 def power_index(df, OtherPopCol, TargetPopCol, OtherParty, ColilitionParty, vIndex=None, filename=None):
     if len(df.index) < 2:
@@ -99,3 +107,14 @@ def power_index(df, OtherPopCol, TargetPopCol, OtherParty, ColilitionParty, vInd
         bpi(group, quoat, filename)
     if vIndex is None or vIndex == 'ssi':
         ssi(group, quoat ,filename)
+
+def power_index_map(df, DistrictCol, OtherPopCol, TargetPopCol, 
+                    OtherParty, ColilitionParty, vIndex=None, filename=None):
+    if DistrictCol not in df.columns:
+        raise Exception("Can Not find District Coloumn in Dataframe")
+
+    district_list = df[DistrictCol].tolist()
+    for i in district_list:
+        df_dist = df[df[DistrictCol]==i]]
+        file_out = f'{filename}District_{i}'
+        power_index(df_dist, OtherPopCol, TargetPopCol, OtherParty, ColilitionParty, vIndex, filename=file_out)
