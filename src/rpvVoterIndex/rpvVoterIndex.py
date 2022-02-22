@@ -72,7 +72,7 @@ def bpi(group, quoat, filename=None):
             df_share.to_csv(f'Banzhaf-Power.csv',index=False)
         else:
             df_share.to_csv(f'{filename}-Banzhaf-Power.csv',index=False)
-    else filename is not None:
+    else:
         file1 = open("No_Cparty_Winning_Colition.txt","a")
         file1.writelines(f'{filename} \n')
         file1.close()
